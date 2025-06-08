@@ -10,7 +10,9 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      MATRICULA: '2021072620' 
+      MATRICULA: '2021072620'
+      NUGET_SOURCE: https://nuget.pkg.github.com/mayrafc/index.json  
+      NUGET_API_KEY: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
       - name: Checkout repository
@@ -31,12 +33,7 @@ jobs:
         run: dotnet pack Calculator/Calculator.sln --configuration Release --output ./nupkg /p:PackageVersion=${{ env.MATRICULA }}
 
       - name: Publish NuGet package to GitHub Packages
-        run: |
-          dotnet nuget push ./nupkg/*.nupkg \
-            --source "github" \
-            --api-key ${{ secrets.GITHUB_TOKEN }}
-        env:
-          NUGET_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: dotnet nuget push ./nupkg/*.nupkg --source ${{ env.NUGET_SOURCE }} --api-key ${{ env.NUGET_API_KEY }}
 
       - name: Create GitHub Release
         uses: ncipollo/release-action@v1

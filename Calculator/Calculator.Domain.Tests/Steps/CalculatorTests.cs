@@ -47,5 +47,17 @@ namespace Calculator.Domain.Tests.Steps
         {
             Assert.That(_resultado, Is.EqualTo(resultado));
         }
+        [When("multiplico")]
+        public void CuandoMultiplico()
+        {
+            _resultado = Calculadora.Multiply(_operador01, _operador02);
+        }
+
+        [When("divido")]
+        public void CuandoDivido()
+        {
+            _resultado = Calculadora.Divide(_operador01, _operador02);
+        }
+
     }
 }

@@ -21,10 +21,10 @@ jobs:
           dotnet-version: '8.0.x'
 
       - name: Install DocFX
-        run: |
-          wget https://github.com/dotnet/docfx/releases/download/v2.59.4/docfx.zip
-          unzip docfx.zip -d docfx
-          sudo ln -s $PWD/docfx/docfx /usr/local/bin/docfx
+        run: dotnet tool install -g docfx
+
+      - name: Add dotnet tools to PATH
+        run: echo "$HOME/.dotnet/tools" >> $GITHUB_PATH
 
       - name: Generate Documentation
         run: docfx docs/docfx.json

@@ -1,0 +1,30 @@
+{
+  "metadata": [
+    {
+      "src": [
+        {
+          "files": [ "**/*.csproj" ],
+          "src": "../Calculator.Domain"
+        }
+      ],
+      "dest": "api"
+    }
+  ],
+  "build": {
+    "content": [
+      {
+        "files": [ "**/*.md", "toc.yml" ]
+      },
+      {
+        "files": [ "api/**.yml" ]
+      }
+    ],
+    "dest": "_site",
+    "globalMetadata": {
+      "_appTitle": "Calculator Documentation"
+    },
+    "template": [
+      "default"
+    ]
+  }
+}

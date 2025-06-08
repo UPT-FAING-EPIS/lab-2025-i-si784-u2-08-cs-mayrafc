@@ -1,0 +1,49 @@
+name: Release NuGet Package
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+
+    env:
+      MATRICULA: '2021072620' 
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '7.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build solution
+        run: dotnet build --configuration Release
+
+      - name: Pack NuGet package
+        run: |
+          dotnet pack --configuration Release --output ./nupkg /p:PackageVersion=${{ env.MATRICULA }}
+
+      - name: Publish NuGet package to GitHub Packages
+        run: |
+          dotnet nuget push ./nupkg/*.nupkg \
+            --source "github" \
+            --api-key ${{ secrets.GITHUB_TOKEN }}
+        env:
+          NUGET_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create GitHub Release
+        uses: ncipollo/release-action@v1
+        with:
+          tag: v${{ env.MATRICULA }}
+          name: Release v${{ env.MATRICULA }}
+          body: "Release automatically generated for version ${{ env.MATRICULA }}"
+          draft: false
+          prerelease: false

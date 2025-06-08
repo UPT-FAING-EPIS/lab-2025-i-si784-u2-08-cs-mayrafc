@@ -27,10 +27,11 @@ jobs:
         run: echo "$HOME/.dotnet/tools" >> $GITHUB_PATH
 
       - name: Generate Documentation
-        run: docfx docs/docfx.json
+        run: docfx docs/docfx_project/docfx.json
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./docs/_site
+          publish_dir: ./docs/docfx_project/_site
+

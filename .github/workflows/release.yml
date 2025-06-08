@@ -22,14 +22,13 @@ jobs:
           dotnet-version: '7.0.x'
 
       - name: Restore dependencies
-        run: dotnet restore
+        run: dotnet restore Calculator/Calculator.sln
 
       - name: Build solution
-        run: dotnet build --configuration Release
+        run: dotnet build Calculator/Calculator.sln --configuration Release
 
       - name: Pack NuGet package
-        run: |
-          dotnet pack --configuration Release --output ./nupkg /p:PackageVersion=${{ env.MATRICULA }}
+        run: dotnet pack Calculator/Calculator.sln --configuration Release --output ./nupkg /p:PackageVersion=${{ env.MATRICULA }}
 
       - name: Publish NuGet package to GitHub Packages
         run: |

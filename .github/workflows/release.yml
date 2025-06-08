@@ -12,7 +12,7 @@ jobs:
     env:
       MATRICULA: '2021072620'
       NUGET_SOURCE: https://nuget.pkg.github.com/mayrafc/index.json  
-      NUGET_API_KEY: ${{ secrets.GITHUB_TOKEN }}
+      NUGET_API_KEY: ${{ secrets.NUGET_TOKEN }}
 
     steps:
       - name: Checkout repository

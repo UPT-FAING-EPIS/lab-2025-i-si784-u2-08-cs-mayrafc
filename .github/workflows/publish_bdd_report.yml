@@ -14,10 +14,10 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v3
 
-      - name: Setup .NET SDK
+      - name: Setup .NET SDK 7.0
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: '8.0.x'
+          dotnet-version: '7.0.x'
 
       - name: Restore dependencies
         run: dotnet restore Calculator/Calculator.Domain.Tests
@@ -28,10 +28,11 @@ jobs:
       - name: Run tests with BDD report output
         run: |
           dotnet test Calculator/Calculator.Domain.Tests \
+            --configuration Release \
             --logger "trx;LogFileName=TestResults.trx" \
             --results-directory ./TestResults
 
-      - name: Install SpecFlow.Plus.LivingDoc CLI (if using LivingDoc for BDD report)
+      - name: Install SpecFlow.Plus.LivingDoc CLI
         run: dotnet tool install --global SpecFlow.Plus.LivingDoc.CLI
 
       - name: Add dotnet tools to PATH
